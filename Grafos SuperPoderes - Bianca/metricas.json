@@ -1,0 +1,161 @@
+{
+  "incidencia": {
+    "num_nos": 22,
+    "num_arestas": 30,
+    "grau_medio": 2.73,
+    "densidade": 0.1299,
+    "clustering": 0.0,
+    "num_componentes": 1,
+    "diametro": 6,
+    "top_degree": [
+      [
+        "P:Teletransporte",
+        0.23809523809523808
+      ],
+      [
+        "G:Comédia",
+        0.23809523809523808
+      ],
+      [
+        "C:Gênero",
+        0.19047619047619047
+      ],
+      [
+        "P:Ler mentes",
+        0.14285714285714285
+      ],
+      [
+        "C:Trailer",
+        0.14285714285714285
+      ]
+    ],
+    "top_betweenness": [
+      [
+        "P:Teletransporte",
+        0.3457369614512471
+      ],
+      [
+        "G:Comédia",
+        0.20788737717309147
+      ],
+      [
+        "C:Gênero",
+        0.17399470899470904
+      ],
+      [
+        "Pessoa:Adelice Rocha Nogueira",
+        0.1456878306878307
+      ],
+      [
+        "Pessoa:Giovanna zangarelli",
+        0.14525699168556314
+      ]
+    ]
+  },
+  "similaridade": {
+    "num_nos": 10,
+    "num_arestas": 31,
+    "grau_medio": 6.2,
+    "densidade": 0.6889,
+    "clustering": 0.6648,
+    "num_componentes": 1,
+    "diametro": 2,
+    "top_degree": [
+      [
+        "Pessoa:Emi",
+        1.1111111111111112
+      ],
+      [
+        "Pessoa:Verônica",
+        0.8888888888888888
+      ],
+      [
+        "Pessoa:Giovanna zangarelli",
+        0.6666666666666666
+      ],
+      [
+        "Pessoa:Bruna Luiza",
+        0.6666666666666666
+      ],
+      [
+        "Pessoa:Isabela pina",
+        0.6666666666666666
+      ]
+    ],
+    "top_betweenness": [
+      [
+        "Pessoa:Verônica",
+        0.08425925925925926
+      ],
+      [
+        "Pessoa:Emi",
+        0.08425925925925926
+      ],
+      [
+        "Pessoa:Lilian",
+        0.05509259259259259
+      ],
+      [
+        "Pessoa:Isabela pina",
+        0.03796296296296296
+      ],
+      [
+        "Pessoa:Ana Paula",
+        0.035648148148148144
+      ]
+    ]
+  },
+  "coocorrencia": {
+    "num_nos": 12,
+    "num_arestas": 25,
+    "grau_medio": 4.17,
+    "densidade": 0.3788,
+    "clustering": 0.621,
+    "num_componentes": 1,
+    "diametro": 3,
+    "top_degree": [
+      [
+        "P:Teletransporte",
+        0.7272727272727273
+      ],
+      [
+        "G:Comédia",
+        0.5454545454545454
+      ],
+      [
+        "C:Trailer",
+        0.5454545454545454
+      ],
+      [
+        "P:Ler mentes",
+        0.4545454545454546
+      ],
+      [
+        "C:Gênero",
+        0.4545454545454546
+      ]
+    ],
+    "top_betweenness": [
+      [
+        "P:Teletransporte",
+        0.33484848484848484
+      ],
+      [
+        "C:Gênero",
+        0.13090909090909092
+      ],
+      [
+        "G:Comédia",
+        0.11727272727272729
+      ],
+      [
+        "C:Trailer",
+        0.11727272727272725
+      ],
+      [
+        "G:Terror",
+        0.0606060606060606
+      ]
+    ]
+  }
+}

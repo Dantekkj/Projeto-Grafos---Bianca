@@ -1,0 +1,276 @@
+{
+  "nodes": [
+    {
+      "id": "P:Invisibilidade",
+      "tipo": "poder",
+      "label": "Invisibilidade"
+    },
+    {
+      "id": "P:Ler mentes",
+      "tipo": "poder",
+      "label": "Ler mentes"
+    },
+    {
+      "id": "P:Teletransporte",
+      "tipo": "poder",
+      "label": "Teletransporte"
+    },
+    {
+      "id": "P:Voar",
+      "tipo": "poder",
+      "label": "Voar"
+    },
+    {
+      "id": "G:Comédia",
+      "tipo": "genero",
+      "label": "Comédia"
+    },
+    {
+      "id": "G:Drama",
+      "tipo": "genero",
+      "label": "Drama"
+    },
+    {
+      "id": "G:Ficção Científica",
+      "tipo": "genero",
+      "label": "Ficção Científica"
+    },
+    {
+      "id": "G:Terror",
+      "tipo": "genero",
+      "label": "Terror"
+    },
+    {
+      "id": "C:Ator",
+      "tipo": "categoria",
+      "label": "Ator"
+    },
+    {
+      "id": "C:Gênero",
+      "tipo": "categoria",
+      "label": "Gênero"
+    },
+    {
+      "id": "C:Roteiro",
+      "tipo": "categoria",
+      "label": "Roteiro"
+    },
+    {
+      "id": "C:Trailer",
+      "tipo": "categoria",
+      "label": "Trailer"
+    },
+    {
+      "id": "Pessoa:Verônica",
+      "tipo": "pessoa",
+      "label": "Verônica",
+      "idade": "19 anos - 40 anos"
+    },
+    {
+      "id": "Pessoa:Giovanna zangarelli",
+      "tipo": "pessoa",
+      "label": "Giovanna zangarelli",
+      "idade": "<=18 anos"
+    },
+    {
+      "id": "Pessoa:Adelice Rocha Nogueira",
+      "tipo": "pessoa",
+      "label": "Adelice Rocha Nogueira",
+      "idade": ">61"
+    },
+    {
+      "id": "Pessoa:Bruna Luiza",
+      "tipo": "pessoa",
+      "label": "Bruna Luiza",
+      "idade": "<=18 anos"
+    },
+    {
+      "id": "Pessoa:Isabela pina",
+      "tipo": "pessoa",
+      "label": "Isabela pina",
+      "idade": "19 anos - 40 anos"
+    },
+    {
+      "id": "Pessoa:Emi",
+      "tipo": "pessoa",
+      "label": "Emi",
+      "idade": "<=18 anos"
+    },
+    {
+      "id": "Pessoa:Ana Paula",
+      "tipo": "pessoa",
+      "label": "Ana Paula",
+      "idade": "40 anos - 60 anos"
+    },
+    {
+      "id": "Pessoa:Lilian",
+      "tipo": "pessoa",
+      "label": "Lilian",
+      "idade": "19 anos - 40 anos"
+    },
+    {
+      "id": "Pessoa:João Victor Zaparoli",
+      "tipo": "pessoa",
+      "label": "João Victor Zaparoli",
+      "idade": "19 anos - 40 anos"
+    },
+    {
+      "id": "Pessoa:Israell evellin carneiro",
+      "tipo": "pessoa",
+      "label": "Israell evellin carneiro",
+      "idade": "19 anos - 40 anos"
+    }
+  ],
+  "links": [
+    {
+      "source": "P:Invisibilidade",
+      "target": "Pessoa:João Victor Zaparoli",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Ler mentes",
+      "target": "Pessoa:Ana Paula",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Ler mentes",
+      "target": "Pessoa:Lilian",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Ler mentes",
+      "target": "Pessoa:Israell evellin carneiro",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Teletransporte",
+      "target": "Pessoa:Verônica",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Teletransporte",
+      "target": "Pessoa:Giovanna zangarelli",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Teletransporte",
+      "target": "Pessoa:Adelice Rocha Nogueira",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Teletransporte",
+      "target": "Pessoa:Isabela pina",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Teletransporte",
+      "target": "Pessoa:Emi",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Voar",
+      "target": "Pessoa:Bruna Luiza",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Comédia",
+      "target": "Pessoa:Verônica",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Comédia",
+      "target": "Pessoa:Bruna Luiza",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Comédia",
+      "target": "Pessoa:Emi",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Comédia",
+      "target": "Pessoa:Lilian",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Comédia",
+      "target": "Pessoa:Israell evellin carneiro",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Drama",
+      "target": "Pessoa:Adelice Rocha Nogueira",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Drama",
+      "target": "Pessoa:Ana Paula",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Ficção Científica",
+      "target": "Pessoa:Giovanna zangarelli",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Terror",
+      "target": "Pessoa:Isabela pina",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Terror",
+      "target": "Pessoa:João Victor Zaparoli",
+      "weight": 1.0
+    },
+    {
+      "source": "C:Ator",
+      "target": "Pessoa:Isabela pina",
+      "weight": 1.0
+    },
+    {
+      "source": "C:Ator",
+      "target": "Pessoa:Israell evellin carneiro",
+      "weight": 1.0
+    },
+    {
+      "source": "C:Gênero",
+      "target": "Pessoa:Verônica",
+      "weight": 1.0
+    },
+    {
+      "source": "C:Gênero",
+      "target": "Pessoa:Emi",
+      "weight": 1.0
+    },
+    {
+      "source": "C:Gênero",
+      "target": "Pessoa:Lilian",
+      "weight": 1.0
+    },
+    {
+      "source": "C:Gênero",
+      "target": "Pessoa:João Victor Zaparoli",
+      "weight": 1.0
+    },
+    {
+      "source": "C:Roteiro",
+      "target": "Pessoa:Adelice Rocha Nogueira",
+      "weight": 1.0
+    },
+    {
+      "source": "C:Trailer",
+      "target": "Pessoa:Giovanna zangarelli",
+      "weight": 1.0
+    },
+    {
+      "source": "C:Trailer",
+      "target": "Pessoa:Bruna Luiza",
+      "weight": 1.0
+    },
+    {
+      "source": "C:Trailer",
+      "target": "Pessoa:Ana Paula",
+      "weight": 1.0
+    }
+  ]
+}

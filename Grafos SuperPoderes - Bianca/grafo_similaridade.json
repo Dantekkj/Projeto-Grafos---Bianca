@@ -1,0 +1,211 @@
+{
+  "nodes": [
+    {
+      "id": "Pessoa:Verônica",
+      "tipo": "pessoa",
+      "label": "Verônica"
+    },
+    {
+      "id": "Pessoa:Giovanna zangarelli",
+      "tipo": "pessoa",
+      "label": "Giovanna zangarelli"
+    },
+    {
+      "id": "Pessoa:Adelice Rocha Nogueira",
+      "tipo": "pessoa",
+      "label": "Adelice Rocha Nogueira"
+    },
+    {
+      "id": "Pessoa:Bruna Luiza",
+      "tipo": "pessoa",
+      "label": "Bruna Luiza"
+    },
+    {
+      "id": "Pessoa:Isabela pina",
+      "tipo": "pessoa",
+      "label": "Isabela pina"
+    },
+    {
+      "id": "Pessoa:Emi",
+      "tipo": "pessoa",
+      "label": "Emi"
+    },
+    {
+      "id": "Pessoa:Ana Paula",
+      "tipo": "pessoa",
+      "label": "Ana Paula"
+    },
+    {
+      "id": "Pessoa:Lilian",
+      "tipo": "pessoa",
+      "label": "Lilian"
+    },
+    {
+      "id": "Pessoa:João Victor Zaparoli",
+      "tipo": "pessoa",
+      "label": "João Victor Zaparoli"
+    },
+    {
+      "id": "Pessoa:Israell evellin carneiro",
+      "tipo": "pessoa",
+      "label": "Israell evellin carneiro"
+    }
+  ],
+  "links": [
+    {
+      "source": "Pessoa:Verônica",
+      "target": "Pessoa:Giovanna zangarelli",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Verônica",
+      "target": "Pessoa:Adelice Rocha Nogueira",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Verônica",
+      "target": "Pessoa:Bruna Luiza",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Verônica",
+      "target": "Pessoa:Isabela pina",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Verônica",
+      "target": "Pessoa:Emi",
+      "weight": 1.0
+    },
+    {
+      "source": "Pessoa:Verônica",
+      "target": "Pessoa:Lilian",
+      "weight": 0.6666666666666666
+    },
+    {
+      "source": "Pessoa:Verônica",
+      "target": "Pessoa:João Victor Zaparoli",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Verônica",
+      "target": "Pessoa:Israell evellin carneiro",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Giovanna zangarelli",
+      "target": "Pessoa:Adelice Rocha Nogueira",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Giovanna zangarelli",
+      "target": "Pessoa:Bruna Luiza",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Giovanna zangarelli",
+      "target": "Pessoa:Isabela pina",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Giovanna zangarelli",
+      "target": "Pessoa:Emi",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Giovanna zangarelli",
+      "target": "Pessoa:Ana Paula",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Adelice Rocha Nogueira",
+      "target": "Pessoa:Isabela pina",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Adelice Rocha Nogueira",
+      "target": "Pessoa:Emi",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Adelice Rocha Nogueira",
+      "target": "Pessoa:Ana Paula",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Bruna Luiza",
+      "target": "Pessoa:Emi",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Bruna Luiza",
+      "target": "Pessoa:Ana Paula",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Bruna Luiza",
+      "target": "Pessoa:Lilian",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Bruna Luiza",
+      "target": "Pessoa:Israell evellin carneiro",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Isabela pina",
+      "target": "Pessoa:Emi",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Isabela pina",
+      "target": "Pessoa:João Victor Zaparoli",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Isabela pina",
+      "target": "Pessoa:Israell evellin carneiro",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Emi",
+      "target": "Pessoa:Emi",
+      "weight": 1.0
+    },
+    {
+      "source": "Pessoa:Emi",
+      "target": "Pessoa:Lilian",
+      "weight": 0.6666666666666666
+    },
+    {
+      "source": "Pessoa:Emi",
+      "target": "Pessoa:João Victor Zaparoli",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Emi",
+      "target": "Pessoa:Israell evellin carneiro",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Ana Paula",
+      "target": "Pessoa:Lilian",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Ana Paula",
+      "target": "Pessoa:Israell evellin carneiro",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Lilian",
+      "target": "Pessoa:João Victor Zaparoli",
+      "weight": 0.3333333333333333
+    },
+    {
+      "source": "Pessoa:Lilian",
+      "target": "Pessoa:Israell evellin carneiro",
+      "weight": 0.6666666666666666
+    }
+  ]
+}

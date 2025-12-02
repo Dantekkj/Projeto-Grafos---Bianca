@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Grafos</title>
+    <!-- Biblioteca D3.js para criar visualizações interativas -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Reset de estilos padrão do navegador */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Estilo do corpo da página */
+        body {
+            background: #0f1419;
+            color: #e8eaed;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: #1a1f2e;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid #2a3142;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #e8eaed;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #9aa0a6;
+            font-weight: 400;
+        }
+
+        /* Botões de navegação entre grafos */
+        .tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .tab-button {
+            background: #1a1f2e;
+            border: 1px solid #2a3142;
+            color: #9aa0a6;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .tab-button:hover {
+            background: #252b3b;
+            border-color: #3a4152;
+        }
+
+        .tab-button.active {
+            background: #4a8fff;
+            color: white;
+            border-color: #4a8fff;
+        }
+
+        /* Container do grafo */
+        .graph-container {
+            background: #1a1f2e;
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid #2a3142;
+            min-height: 600px;
+            position: relative;
+        }
+
+        /* Legenda das cores */
+        .legend {
+            display: flex;
+            gap: 24px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #2a3142;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #9aa0a6;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        /* Área de visualização do grafo */
+        #graph-viz {
+            width: 100%;
+            height: 550px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Controles de zoom */
+        .zoom-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .zoom-btn {
+            background: #1a1f2e;
+            border: 1px solid #2a3142;
+            color: #e8eaed;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .zoom-btn:hover {
+            background: #252b3b;
+            border-color: #4a8fff;
+            color: #4a8fff;
+        }
+
+        .zoom-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Estilos dos nós (círculos) */
+        .node {
+            cursor: grab;
+            transition: all 0.2s ease;
+        }
+
+        .node:hover {
+            filter: brightness(1.2);
+        }
+
+        .node:active {
+            cursor: grabbing;
+        }
+
+        /* Estilos das conexões (linhas) */
+        .link {
+            stroke: #3a4152;
+            stroke-opacity: 0.4;
+        }
+
+        /* Estilos dos textos (labels) */
+        .node-label {
+            font-size: 11px;
+            font-weight: 500;
+            fill: #e8eaed;
+            pointer-events: none;
+            text-anchor: middle;
+            user-select: none;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 550px;
+            font-size: 16px;
+            color: #9aa0a6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Análise de Grafos</h1>
+            <p class="subtitle">Visualização interativa de relações entre poderes, pessoas e categorias.</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="showGraph('incidencia')" id="tab-incidencia">
+                Incidência
+            </button>
+            <button class="tab-button" onclick="showGraph('similaridade')" id="tab-similaridade">
+                Similaridade (Pessoas)
+            </button>
+            <button class="tab-button" onclick="showGraph('coocorrencia')" id="tab-coocorrencia">
+                Coocorrência (Categorias)
+            </button>
+        </div>
+
+        <div class="graph-container">
+            <div class="zoom-controls">
+                <button class="zoom-btn" onclick="zoomIn()" title="Aumentar zoom">+</button>
+                <button class="zoom-btn" onclick="zoomOut()" title="Diminuir zoom">−</button>
+                <button class="zoom-btn" onclick="resetZoom()" title="Resetar zoom">⟲</button>
+            </div>
+            <div id="graph-viz">
+                <div class="loading">Carregando...</div>
+            </div>
+            <div class="legend" id="legend">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variáveis globais para controlar o estado da visualização
+        let currentGraph = 'incidencia';  // Qual grafo está sendo exibido
+        let currentZoom = null;  // Controle de zoom
+        let currentSvg = null;  // Elemento SVG atual
+        let graphDataCache = {};  // Armazena os dados dos grafos
+
+        function loadData() {
+            // Dados do grafo de incidência (pessoas conectadas a poderes, gêneros e categorias)
+            const incidencia = { "nodes": [{ "id": "P:Invisibilidade", "tipo": "poder", "label": "Invisibilidade" }, { "id": "P:Ler mentes", "tipo": "poder", "label": "Ler mentes" }, { "id": "P:Teletransporte", "tipo": "poder", "label": "Teletransporte" }, { "id": "P:Voar", "tipo": "poder", "label": "Voar" }, { "id": "G:Comédia", "tipo": "genero", "label": "Comédia" }, { "id": "G:Drama", "tipo": "genero", "label": "Drama" }, { "id": "G:Ficção Científica", "tipo": "genero", "label": "Ficção Científica" }, { "id": "G:Terror", "tipo": "genero", "label": "Terror" }, { "id": "C:Ator", "tipo": "categoria", "label": "Ator" }, { "id": "C:Gênero", "tipo": "categoria", "label": "Gênero" }, { "id": "C:Roteiro", "tipo": "categoria", "label": "Roteiro" }, { "id": "C:Trailer", "tipo": "categoria", "label": "Trailer" }, { "id": "Pessoa:Verônica", "tipo": "pessoa", "label": "Verônica", "idade": "19 anos - 40 anos" }, { "id": "Pessoa:Giovanna zangarelli", "tipo": "pessoa", "label": "Giovanna zangarelli", "idade": "<=18 anos" }, { "id": "Pessoa:Adelice Rocha Nogueira", "tipo": "pessoa", "label": "Adelice Rocha Nogueira", "idade": ">61" }, { "id": "Pessoa:Bruna Luiza", "tipo": "pessoa", "label": "Bruna Luiza", "idade": "<=18 anos" }, { "id": "Pessoa:Isabela pina", "tipo": "pessoa", "label": "Isabela pina", "idade": "19 anos - 40 anos" }, { "id": "Pessoa:Emi", "tipo": "pessoa", "label": "Emi", "idade": "<=18 anos" }, { "id": "Pessoa:Ana Paula", "tipo": "pessoa", "label": "Ana Paula", "idade": "40 anos - 60 anos" }, { "id": "Pessoa:Lilian", "tipo": "pessoa", "label": "Lilian", "idade": "19 anos - 40 anos" }, { "id": "Pessoa:João Victor Zaparoli", "tipo": "pessoa", "label": "João Victor Zaparoli", "idade": "19 anos - 40 anos" }, { "id": "Pessoa:Israell evellin carneiro", "tipo": "pessoa", "label": "Israell evellin carneiro", "idade": "19 anos - 40 anos" }], "links": [{ "source": "P:Invisibilidade", "target": "Pessoa:João Victor Zaparoli", "weight": 1.0 }, { "source": "P:Ler mentes", "target": "Pessoa:Ana Paula", "weight": 1.0 }, { "source": "P:Ler mentes", "target": "Pessoa:Lilian", "weight": 1.0 }, { "source": "P:Ler mentes", "target": "Pessoa:Israell evellin carneiro", "weight": 1.0 }, { "source": "P:Teletransporte", "target": "Pessoa:Verônica", "weight": 1.0 }, { "source": "P:Teletransporte", "target": "Pessoa:Giovanna zangarelli", "weight": 1.0 }, { "source": "P:Teletransporte", "target": "Pessoa:Adelice Rocha Nogueira", "weight": 1.0 }, { "source": "P:Teletransporte", "target": "Pessoa:Isabela pina", "weight": 1.0 }, { "source": "P:Teletransporte", "target": "Pessoa:Emi", "weight": 1.0 }, { "source": "P:Voar", "target": "Pessoa:Bruna Luiza", "weight": 1.0 }, { "source": "G:Comédia", "target": "Pessoa:Verônica", "weight": 1.0 }, { "source": "G:Comédia", "target": "Pessoa:Bruna Luiza", "weight": 1.0 }, { "source": "G:Comédia", "target": "Pessoa:Emi", "weight": 1.0 }, { "source": "G:Comédia", "target": "Pessoa:Lilian", "weight": 1.0 }, { "source": "G:Comédia", "target": "Pessoa:Israell evellin carneiro", "weight": 1.0 }, { "source": "G:Drama", "target": "Pessoa:Adelice Rocha Nogueira", "weight": 1.0 }, { "source": "G:Drama", "target": "Pessoa:Ana Paula", "weight": 1.0 }, { "source": "G:Ficção Científica", "target": "Pessoa:Giovanna zangarelli", "weight": 1.0 }, { "source": "G:Terror", "target": "Pessoa:Isabela pina", "weight": 1.0 }, { "source": "G:Terror", "target": "Pessoa:João Victor Zaparoli", "weight": 1.0 }, { "source": "C:Ator", "target": "Pessoa:Isabela pina", "weight": 1.0 }, { "source": "C:Ator", "target": "Pessoa:Israell evellin carneiro", "weight": 1.0 }, { "source": "C:Gênero", "target": "Pessoa:Verônica", "weight": 1.0 }, { "source": "C:Gênero", "target": "Pessoa:Emi", "weight": 1.0 }, { "source": "C:Gênero", "target": "Pessoa:Lilian", "weight": 1.0 }, { "source": "C:Gênero", "target": "Pessoa:João Victor Zaparoli", "weight": 1.0 }, { "source": "C:Roteiro", "target": "Pessoa:Adelice Rocha Nogueira", "weight": 1.0 }, { "source": "C:Trailer", "target": "Pessoa:Giovanna zangarelli", "weight": 1.0 }, { "source": "C:Trailer", "target": "Pessoa:Bruna Luiza", "weight": 1.0 }, { "source": "C:Trailer", "target": "Pessoa:Ana Paula", "weight": 1.0 }] };
+
+            // Dados do grafo de similaridade (pessoas similares conectadas)
+            const similaridade = { "nodes": [{ "id": "Pessoa:Verônica", "tipo": "pessoa", "label": "Verônica" }, { "id": "Pessoa:Giovanna zangarelli", "tipo": "pessoa", "label": "Giovanna zangarelli" }, { "id": "Pessoa:Adelice Rocha Nogueira", "tipo": "pessoa", "label": "Adelice Rocha Nogueira" }, { "id": "Pessoa:Bruna Luiza", "tipo": "pessoa", "label": "Bruna Luiza" }, { "id": "Pessoa:Isabela pina", "tipo": "pessoa", "label": "Isabela pina" }, { "id": "Pessoa:Emi", "tipo": "pessoa", "label": "Emi" }, { "id": "Pessoa:Ana Paula", "tipo": "pessoa", "label": "Ana Paula" }, { "id": "Pessoa:Lilian", "tipo": "pessoa", "label": "Lilian" }, { "id": "Pessoa:João Victor Zaparoli", "tipo": "pessoa", "label": "João Victor Zaparoli" }, { "id": "Pessoa:Israell evellin carneiro", "tipo": "pessoa", "label": "Israell evellin carneiro" }], "links": [{ "source": "Pessoa:Verônica", "target": "Pessoa:Giovanna zangarelli", "weight": 0.3333333333333333 }, { "source": "Pessoa:Verônica", "target": "Pessoa:Adelice Rocha Nogueira", "weight": 0.3333333333333333 }, { "source": "Pessoa:Verônica", "target": "Pessoa:Bruna Luiza", "weight": 0.3333333333333333 }, { "source": "Pessoa:Verônica", "target": "Pessoa:Isabela pina", "weight": 0.3333333333333333 }, { "source": "Pessoa:Verônica", "target": "Pessoa:Emi", "weight": 1.0 }, { "source": "Pessoa:Verônica", "target": "Pessoa:Lilian", "weight": 0.6666666666666666 }, { "source": "Pessoa:Verônica", "target": "Pessoa:João Victor Zaparoli", "weight": 0.3333333333333333 }, { "source": "Pessoa:Verônica", "target": "Pessoa:Israell evellin carneiro", "weight": 0.3333333333333333 }, { "source": "Pessoa:Giovanna zangarelli", "target": "Pessoa:Adelice Rocha Nogueira", "weight": 0.3333333333333333 }, { "source": "Pessoa:Giovanna zangarelli", "target": "Pessoa:Bruna Luiza", "weight": 0.3333333333333333 }, { "source": "Pessoa:Giovanna zangarelli", "target": "Pessoa:Isabela pina", "weight": 0.3333333333333333 }, { "source": "Pessoa:Giovanna zangarelli", "target": "Pessoa:Emi", "weight": 0.3333333333333333 }, { "source": "Pessoa:Giovanna zangarelli", "target": "Pessoa:Ana Paula", "weight": 0.3333333333333333 }, { "source": "Pessoa:Adelice Rocha Nogueira", "target": "Pessoa:Isabela pina", "weight": 0.3333333333333333 }, { "source": "Pessoa:Adelice Rocha Nogueira", "target": "Pessoa:Emi", "weight": 0.3333333333333333 }, { "source": "Pessoa:Adelice Rocha Nogueira", "target": "Pessoa:Ana Paula", "weight": 0.3333333333333333 }, { "source": "Pessoa:Bruna Luiza", "target": "Pessoa:Emi", "weight": 0.3333333333333333 }, { "source": "Pessoa:Bruna Luiza", "target": "Pessoa:Ana Paula", "weight": 0.3333333333333333 }, { "source": "Pessoa:Bruna Luiza", "target": "Pessoa:Lilian", "weight": 0.3333333333333333 }, { "source": "Pessoa:Bruna Luiza", "target": "Pessoa:Israell evellin carneiro", "weight": 0.3333333333333333 }, { "source": "Pessoa:Isabela pina", "target": "Pessoa:Emi", "weight": 0.3333333333333333 }, { "source": "Pessoa:Isabela pina", "target": "Pessoa:João Victor Zaparoli", "weight": 0.3333333333333333 }, { "source": "Pessoa:Isabela pina", "target": "Pessoa:Israell evellin carneiro", "weight": 0.3333333333333333 }, { "source": "Pessoa:Emi", "target": "Pessoa:Emi", "weight": 1.0 }, { "source": "Pessoa:Emi", "target": "Pessoa:Lilian", "weight": 0.6666666666666666 }, { "source": "Pessoa:Emi", "target": "Pessoa:João Victor Zaparoli", "weight": 0.3333333333333333 }, { "source": "Pessoa:Emi", "target": "Pessoa:Israell evellin carneiro", "weight": 0.3333333333333333 }, { "source": "Pessoa:Ana Paula", "target": "Pessoa:Lilian", "weight": 0.3333333333333333 }, { "source": "Pessoa:Ana Paula", "target": "Pessoa:Israell evellin carneiro", "weight": 0.3333333333333333 }, { "source": "Pessoa:Lilian", "target": "Pessoa:João Victor Zaparoli", "weight": 0.3333333333333333 }, { "source": "Pessoa:Lilian", "target": "Pessoa:Israell evellin carneiro", "weight": 0.6666666666666666 }] };
+
+            // Dados do grafo de coocorrência (poderes, gêneros e categorias que aparecem juntos)
+            const coocorrencia = { "nodes": [{ "id": "P:Teletransporte", "tipo": "poder", "label": "Teletransporte" }, { "id": "P:Voar", "tipo": "poder", "label": "Voar" }, { "id": "P:Ler mentes", "tipo": "poder", "label": "Ler mentes" }, { "id": "P:Invisibilidade", "tipo": "poder", "label": "Invisibilidade" }, { "id": "G:Comédia", "tipo": "genero", "label": "Comédia" }, { "id": "G:Ficção Científica", "tipo": "genero", "label": "Ficção Científica" }, { "id": "G:Drama", "tipo": "genero", "label": "Drama" }, { "id": "G:Terror", "tipo": "genero", "label": "Terror" }, { "id": "C:Gênero", "tipo": "categoria", "label": "Gênero" }, { "id": "C:Trailer", "tipo": "categoria", "label": "Trailer" }, { "id": "C:Roteiro", "tipo": "categoria", "label": "Roteiro" }, { "id": "C:Ator", "tipo": "categoria", "label": "Ator" }], "links": [{ "source": "P:Teletransporte", "target": "G:Comédia", "weight": 3.0 }, { "source": "P:Teletransporte", "target": "C:Gênero", "weight": 3.0 }, { "source": "P:Teletransporte", "target": "G:Ficção Científica", "weight": 1.0 }, { "source": "P:Teletransporte", "target": "C:Trailer", "weight": 1.0 }, { "source": "P:Teletransporte", "target": "G:Drama", "weight": 1.0 }, { "source": "P:Teletransporte", "target": "C:Roteiro", "weight": 1.0 }, { "source": "P:Teletransporte", "target": "G:Terror", "weight": 1.0 }, { "source": "P:Teletransporte", "target": "C:Ator", "weight": 1.0 }, { "source": "P:Voar", "target": "G:Comédia", "weight": 1.0 }, { "source": "P:Voar", "target": "C:Trailer", "weight": 1.0 }, { "source": "P:Ler mentes", "target": "G:Drama", "weight": 1.0 }, { "source": "P:Ler mentes", "target": "C:Trailer", "weight": 1.0 }, { "source": "P:Ler mentes", "target": "G:Comédia", "weight": 2.0 }, { "source": "P:Ler mentes", "target": "C:Gênero", "weight": 1.0 }, { "source": "P:Ler mentes", "target": "C:Ator", "weight": 1.0 }, { "source": "P:Invisibilidade", "target": "G:Terror", "weight": 1.0 }, { "source": "P:Invisibilidade", "target": "C:Gênero", "weight": 1.0 }, { "source": "G:Comédia", "target": "C:Gênero", "weight": 4.0 }, { "source": "G:Comédia", "target": "C:Trailer", "weight": 1.0 }, { "source": "G:Comédia", "target": "C:Ator", "weight": 1.0 }, { "source": "G:Ficção Científica", "target": "C:Trailer", "weight": 1.0 }, { "source": "G:Drama", "target": "C:Roteiro", "weight": 1.0 }, { "source": "G:Drama", "target": "C:Trailer", "weight": 1.0 }, { "source": "G:Terror", "target": "C:Ator", "weight": 1.0 }, { "source": "G:Terror", "target": "C:Gênero", "weight": 1.0 }] };
+
+            // Armazena todos os grafos no cache
+            graphDataCache = {
+                incidencia: incidencia,
+                similaridade: similaridade,
+                coocorrencia: coocorrencia
+            };
+
+            // Mostra o grafo de incidência por padrão
+            showGraph('incidencia');
+        }
+
+        function showGraph(graphType) {
+            // Atualiza qual grafo está sendo exibido
+            currentGraph = graphType;
+
+            // Remove a classe 'active' de todos os botões
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Adiciona a classe 'active' no botão clicado
+            document.getElementById(`tab-${graphType}`).classList.add('active');
+
+            // Se o grafo existe no cache, renderiza ele
+            if (graphDataCache[graphType]) {
+                renderGraph(graphDataCache[graphType], graphType);
+                updateLegend(graphType);
+            }
+        }
+
+        function renderGraph(data, graphType) {
+            // Limpa o conteúdo anterior
+            d3.select('#graph-viz').html('');
+
+            // Pega as dimensões do container
+            const container = document.getElementById('graph-viz');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            // Cria o elemento SVG
+            const svg = d3.select('#graph-viz')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            currentSvg = svg;
+
+            // Cria um grupo para aplicar zoom
+            const g = svg.append('g');
+
+            // Configura o comportamento de zoom
+            const zoom = d3.zoom()
+                .scaleExtent([0.1, 4])  // Limites de zoom (10% a 400%)
+                .on('zoom', (event) => {
+                    g.attr('transform', event.transform);
+                });
+
+            svg.call(zoom);
+            currentZoom = zoom;
+
+            // Cria a simulação de forças para posicionar os nós
+            const simulation = d3.forceSimulation(data.nodes)
+                .force('link', d3.forceLink(data.links).id(d => d.id).distance(120))  // Força das conexões
+                .force('charge', d3.forceManyBody().strength(-400))  // Repulsão entre nós
+                .force('center', d3.forceCenter(width / 2, height / 2))  // Centraliza o grafo
+                .force('collision', d3.forceCollide().radius(40));  // Evita sobreposição
+
+            // Cria as linhas (conexões entre nós)
+            const link = g.append('g')
+                .selectAll('line')
+                .data(data.links)
+                .join('line')
+                .attr('class', 'link')
+                .attr('stroke-width', d => Math.sqrt(d.weight || 1) * 1.5);  // Espessura baseada no peso
+
+            // Cria os círculos (nós do grafo)
+            const node = g.append('g')
+                .selectAll('circle')
+                .data(data.nodes)
+                .join('circle')
+                .attr('class', 'node')
+                .attr('r', 16)  // Raio do círculo
+                .attr('fill', d => getNodeColor(d, graphType))  // Cor baseada no tipo
+                .call(drag(simulation));  // Permite arrastar os nós
+
+            // Cria os textos (labels dos nós)
+            const labels = g.append('g')
+                .selectAll('text')
+                .data(data.nodes)
+                .join('text')
+                .attr('class', 'node-label')
+                .attr('dy', 28)  // Posição vertical do texto
+                .text(d => d.label || d.id);  // Texto a ser exibido
+
+            // A cada tick da simulação, atualiza as posições
+            simulation.on('tick', () => {
+                // Atualiza a posição das linhas
+                link
+                    .attr('x1', d => d.source.x)
+                    .attr('y1', d => d.source.y)
+                    .attr('x2', d => d.target.x)
+                    .attr('y2', d => d.target.y);
+
+                // Atualiza a posição dos círculos
+                node
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+
+                // Atualiza a posição dos textos
+                labels
+                    .attr('x', d => d.x)
+                    .attr('y', d => d.y);
+            });
+        }
+
+        function getNodeColor(node, graphType) {
+            // Define a cor do nó baseado no tipo e no grafo
+            if (graphType === 'incidencia') {
+                if (node.tipo === 'pessoa') return '#10b981';  // Verde para pessoas
+                if (node.tipo === 'poder') return '#4a8fff';  // Azul para poderes
+                if (node.tipo === 'genero') return '#a855f7';  // Roxo para gêneros
+                if (node.tipo === 'categoria') return '#f59e0b';  // Laranja para categorias
+                return '#9aa0a6';  // Cinza padrão
+            } else if (graphType === 'similaridade') {
+                return '#10b981';  // Verde para todas as pessoas
+            } else {
+                // Grafo de coocorrência
+                if (node.tipo === 'poder') return '#4a8fff';  // Azul
+                if (node.tipo === 'genero') return '#a855f7';  // Roxo
+                if (node.tipo === 'categoria') return '#f59e0b';  // Laranja
+                return '#9aa0a6';  // Cinza padrão
+            }
+        }
+
+        // Função para permitir arrastar os nós
+        function drag(simulation) {
+            function dragstarted(event) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                event.subject.fx = event.subject.x;
+                event.subject.fy = event.subject.y;
+            }
+
+            function dragged(event) {
+                event.subject.fx = event.x;
+                event.subject.fy = event.y;
+            }
+
+            function dragended(event) {
+                if (!event.active) simulation.alphaTarget(0);
+                event.subject.fx = null;
+                event.subject.fy = null;
+            }
+
+            return d3.drag()
+                .on('start', dragstarted)
+                .on('drag', dragged)
+                .on('end', dragended);
+        }
+
+        // Atualiza a legenda de acordo com o grafo exibido
+        function updateLegend(graphType) {
+            const legendContainer = document.getElementById('legend');
+
+            if (graphType === 'incidencia') {
+                legendContainer.innerHTML = `
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: #10b981;"></div>
+                        <span>Pessoas</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: #4a8fff;"></div>
+                        <span>Poderes</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: #a855f7;"></div>
+                        <span>Gêneros</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: #f59e0b;"></div>
+                        <span>O que chama atenção</span>
+                    </div>
+                `;
+            } else if (graphType === 'similaridade') {
+                legendContainer.innerHTML = `
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: #10b981;"></div>
+                        <span>Pessoas</span>
+                    </div>
+                `;
+            } else {
+                legendContainer.innerHTML = `
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: #4a8fff;"></div>
+                        <span>Poderes</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: #a855f7;"></div>
+                        <span>Gêneros</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: #f59e0b;"></div>
+                        <span>O que chama atenção</span>
+                    </div>
+                `;
+            }
+        }
+
+        // Aumenta o zoom em 30%
+        function zoomIn() {
+            if (currentSvg && currentZoom) {
+                currentSvg.transition().duration(300).call(currentZoom.scaleBy, 1.3);
+            }
+        }
+
+        // Diminui o zoom em 30%
+        function zoomOut() {
+            if (currentSvg && currentZoom) {
+                currentSvg.transition().duration(300).call(currentZoom.scaleBy, 0.7);
+            }
+        }
+
+        // Reseta o zoom para o padrão
+        function resetZoom() {
+            if (currentSvg && currentZoom) {
+                currentSvg.transition().duration(500).call(currentZoom.transform, d3.zoomIdentity);
+            }
+        }
+
+        // Carrega os dados quando a página terminar de carregar
+        window.addEventListener('load', loadData);
+    </script>
+</body>
+
+</html>

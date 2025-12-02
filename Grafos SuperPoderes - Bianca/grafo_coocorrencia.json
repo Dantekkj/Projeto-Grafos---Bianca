@@ -1,0 +1,191 @@
+{
+  "nodes": [
+    {
+      "id": "P:Teletransporte",
+      "tipo": "poder",
+      "label": "Teletransporte"
+    },
+    {
+      "id": "P:Voar",
+      "tipo": "poder",
+      "label": "Voar"
+    },
+    {
+      "id": "P:Ler mentes",
+      "tipo": "poder",
+      "label": "Ler mentes"
+    },
+    {
+      "id": "P:Invisibilidade",
+      "tipo": "poder",
+      "label": "Invisibilidade"
+    },
+    {
+      "id": "G:Comédia",
+      "tipo": "genero",
+      "label": "Comédia"
+    },
+    {
+      "id": "G:Ficção Científica",
+      "tipo": "genero",
+      "label": "Ficção Científica"
+    },
+    {
+      "id": "G:Drama",
+      "tipo": "genero",
+      "label": "Drama"
+    },
+    {
+      "id": "G:Terror",
+      "tipo": "genero",
+      "label": "Terror"
+    },
+    {
+      "id": "C:Gênero",
+      "tipo": "categoria",
+      "label": "Gênero"
+    },
+    {
+      "id": "C:Trailer",
+      "tipo": "categoria",
+      "label": "Trailer"
+    },
+    {
+      "id": "C:Roteiro",
+      "tipo": "categoria",
+      "label": "Roteiro"
+    },
+    {
+      "id": "C:Ator",
+      "tipo": "categoria",
+      "label": "Ator"
+    }
+  ],
+  "links": [
+    {
+      "source": "P:Teletransporte",
+      "target": "G:Comédia",
+      "weight": 3.0
+    },
+    {
+      "source": "P:Teletransporte",
+      "target": "C:Gênero",
+      "weight": 3.0
+    },
+    {
+      "source": "P:Teletransporte",
+      "target": "G:Ficção Científica",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Teletransporte",
+      "target": "C:Trailer",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Teletransporte",
+      "target": "G:Drama",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Teletransporte",
+      "target": "C:Roteiro",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Teletransporte",
+      "target": "G:Terror",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Teletransporte",
+      "target": "C:Ator",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Voar",
+      "target": "G:Comédia",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Voar",
+      "target": "C:Trailer",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Ler mentes",
+      "target": "G:Drama",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Ler mentes",
+      "target": "C:Trailer",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Ler mentes",
+      "target": "G:Comédia",
+      "weight": 2.0
+    },
+    {
+      "source": "P:Ler mentes",
+      "target": "C:Gênero",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Ler mentes",
+      "target": "C:Ator",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Invisibilidade",
+      "target": "G:Terror",
+      "weight": 1.0
+    },
+    {
+      "source": "P:Invisibilidade",
+      "target": "C:Gênero",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Comédia",
+      "target": "C:Gênero",
+      "weight": 4.0
+    },
+    {
+      "source": "G:Comédia",
+      "target": "C:Trailer",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Comédia",
+      "target": "C:Ator",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Ficção Científica",
+      "target": "C:Trailer",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Drama",
+      "target": "C:Roteiro",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Drama",
+      "target": "C:Trailer",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Terror",
+      "target": "C:Ator",
+      "weight": 1.0
+    },
+    {
+      "source": "G:Terror",
+      "target": "C:Gênero",
+      "weight": 1.0
+    }
+  ]
+}
